@@ -42,7 +42,7 @@ list(GET PROJECT_VERSION_LIST 1 PROJECT_VERSION_MINOR)
 
 find_package(ompl 1 CONFIG REQUIRED)
 
-find_package(Boost 1.67 REQUIRED)
+find_package(Boost 1.71 REQUIRED)
 find_package(Catch2 2.12 REQUIRED)
 find_package(Doxygen 1.8 REQUIRED)
 find_package(Protobuf 3.6 REQUIRED)

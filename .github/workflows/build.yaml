@@ -12,14 +12,14 @@ jobs:
 
     steps:
 
-    - name: Git Checkout
+    - name: Git Checkout SDMP
       uses: actions/checkout@v2
       with:
         path: sdmp
         submodules: true
         lfs: true
 
-    - name: Git Checkout
+    - name: Git Checkout Catch2
       uses: actions/checkout@v2
       with:
         repository: catchorg/Catch2
@@ -32,7 +32,7 @@ jobs:
       shell: bash -l {0}
       run: |
         sudo apt update -y
-        sudo apt install -y ninja-build libompl-dev libprotobuf-dev doxygen
+        sudo apt install -y ninja-build libompl-dev libprotobuf-dev doxygen graphviz mscgen
 
     - name: Install Catch2
       shell: bash -l {0}
@@ -46,7 +46,7 @@ jobs:
       run: |
         mkdir build && cd build
         cmake -GNinja ../sdmp
-        ninja test
+        ninja && ninja test
 
     - name: Publish GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
