@@ -44,9 +44,11 @@ jobs:
     - name: Build and Test
       shell: bash -l {0}
       run: |
-        mkdir build && cd build
-        cmake -GNinja ../sdmp
-        ninja && ninja test
+        mkdir sdmp/_build
+        cd    sdmp/_build
+        cmake -GNinja ..
+        ninja
+        ninja test
 
     - name: Publish GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
