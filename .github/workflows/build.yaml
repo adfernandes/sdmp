@@ -1,0 +1,53 @@
+name: Build & Test
+
+on:
+ - push
+ - pull_request
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+
+    - name: Git Checkout
+      uses: actions/checkout@v2
+      with:
+        - path: sdmp
+        - submodules: true
+        - lfs: true
+
+    - name: Git Checkout
+      uses: actions/checkout@v2
+      with:
+        - path: catch2
+        - submodules: true
+        - lfs: true
+
+    - name: Install Catch2
+      shell: bash -l {0}
+      run: |
+        cd catch2
+        cmake -Bbuild -H. -DBUILD_TESTING=OFF
+        sudo cmake --build build/ --target install
+
+    - name: Install Dependencies
+      shell: bash -l {0}
+      run: |
+        sudo apt update -y
+        sudo apt install -y ninja-build libompl-dev libprotobuf-dev doxygen
+
+    - name: Build and Test
+      shell: bash -l {0}
+      run: |
+        mkdir build && cd build
+        cmake -GNinja ../sdmp
+        ninja test
+
+    - name: Publish GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: build/html
