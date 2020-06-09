@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+// Protocol buffers allow the motion planning
+// library to be extensible, with managed forward
+// and backward compatibility, and structured
+// serialization, both binary and JSON.
+//
+// Note that in 'proto3', all fields are optional
+// by default. So if, for example, the 'path' has
+// not been computed, it is just an 'empty list'.
+
+package sdmp;
+
+message MotionPlan {
+
+    oneof Droid {
+        BB8 bb8 = 1;
+    }
+
+    oneof Bounds {
+        Rectangle rectangle = 2;
+    }
+
+    repeated Obstacle obstacle = 3;
+
+    repeated Coordinates path = 4;
+
+}
+
+// Specific message types used above.
+//
+// For more complex message types, we would
+// break this into multiple files.
+//
+// Also, we would make the 'path' a little
+// more general, allowing curves and straight
+// line segments... but that's for future work.
+
+message BB8 {
+    double radius = 1;
+}
+
+message Rectangle {
+    double length = 1; // also called 'm', the 'x' direction
+    double width  = 2; // also called 'n', the 'y' direction
+}
+
+message Circle {
+    double radius = 1;
+    Coordinates coordinates = 2;
+}
+
+message Obstacle {
+    oneof Type {
+        Circle circle = 1;
+    }
+}
+
+message Coordinates {
+    double x = 1;
+    double y = 2;
+}
+
+// Done
