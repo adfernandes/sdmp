@@ -1,0 +1,57 @@
+name: Build & Test
+
+on:
+ - push
+ - pull_request
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+
+    - name: Git Checkout SDMP
+      uses: actions/checkout@v2
+      with:
+        path: sdmp
+        submodules: true
+        lfs: true
+
+    - name: Git Checkout Catch2
+      uses: actions/checkout@v2
+      with:
+        repository: catchorg/Catch2
+        ref: v2.12.2
+        path: catch2
+        submodules: true
+        lfs: true
+
+    - name: Install Dependencies
+      shell: bash -l {0}
+      run: |
+        sudo apt update -y
+        sudo apt install -y ninja-build libompl-dev protobuf-compiler doxygen graphviz mscgen
+
+    - name: Install Catch2
+      shell: bash -l {0}
+      run: |
+        cd catch2
+        cmake -GNinja -Bbuild -H. -DBUILD_TESTING=OFF
+        sudo cmake --build build/ --target install
+
+    - name: Build and Test
+      shell: bash -l {0}
+      run: |
+        mkdir sdmp/_build
+        cd    sdmp/_build
+        cmake -GNinja ..
+        ninja
+        ninja test
+
+    - name: Publish GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: sdmp/_build/html
