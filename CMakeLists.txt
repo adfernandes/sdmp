@@ -77,12 +77,13 @@ target_include_directories(${PROJECT_NAME}
     PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+        ${Protobuf_INCLUDE_DIR}
     PRIVATE
         ${OMPL_INCLUDE_DIRS}
         ${Boost_INCLUDE_DIRS}
         ${PROJECT_SOURCE_DIR}/library)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${OMPL_LIBRARIES} ${Boost_LIBRARIES} protobuf::libprotobuf)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OMPL_LIBRARIES} ${Boost_LIBRARIES} ${Protobuf_LIBRARY})
 
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}-export
