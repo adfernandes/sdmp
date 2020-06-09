@@ -15,16 +15,16 @@ jobs:
     - name: Git Checkout
       uses: actions/checkout@v2
       with:
-        - path: sdmp
-        - submodules: true
-        - lfs: true
+        path: sdmp
+        submodules: true
+        lfs: true
 
     - name: Git Checkout
       uses: actions/checkout@v2
       with:
-        - path: catch2
-        - submodules: true
-        - lfs: true
+        path: catch2
+        submodules: true
+        lfs: true
 
     - name: Install Catch2
       shell: bash -l {0}
