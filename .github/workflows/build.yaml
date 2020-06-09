@@ -22,22 +22,24 @@ jobs:
     - name: Git Checkout
       uses: actions/checkout@v2
       with:
+        repository: catchorg/Catch2
+        ref: v2.12.2
         path: catch2
         submodules: true
         lfs: true
-
-    - name: Install Catch2
-      shell: bash -l {0}
-      run: |
-        cd catch2
-        cmake -Bbuild -H. -DBUILD_TESTING=OFF
-        sudo cmake --build build/ --target install
 
     - name: Install Dependencies
       shell: bash -l {0}
       run: |
         sudo apt update -y
         sudo apt install -y ninja-build libompl-dev libprotobuf-dev doxygen
+
+    - name: Install Catch2
+      shell: bash -l {0}
+      run: |
+        cd catch2
+        cmake -GNinja -Bbuild -H. -DBUILD_TESTING=OFF
+        sudo cmake --build build/ --target install
 
     - name: Build and Test
       shell: bash -l {0}
