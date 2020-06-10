@@ -1,0 +1,9 @@
+/**
+  \page proto SDMP ProtoBuf
+  The SDMP <a href="https://developers.google.com/protocol-buffers/docs/proto3">Protocol Buffer</a> Definition
+
+  See the <a href="https://developers.google.com/protocol-buffers/docs/cpptutorial">C++ ProtocolBuffer Basics</a>
+  to help get started.
+
+  \include library/sdmp.proto
+*/

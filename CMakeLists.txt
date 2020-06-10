@@ -101,6 +101,8 @@ install(EXPORT ${PROJECT_NAME}-export
 # ----------------------------------------------------------------------------
 # The documentation target
 
+set(DOXYGEN_EXAMPLE_PATH "library")
+set(DOXYGEN_EXAMPLE_PATTERNS "*.proto")
 set(DOXYGEN_EXCLUDE_PATTERNS "*.pb.*")
 set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
 
